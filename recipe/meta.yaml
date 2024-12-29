@@ -23,7 +23,7 @@ requirements:
     - setuptools
   run:
     - python >={{ python_min }}
-    - pyyaml
+    - pyyaml <=5.4
     - numpy 
     - matplotlib-base
     
