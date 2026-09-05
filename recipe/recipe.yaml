@@ -1,0 +1,52 @@
+schema_version: 1
+
+context:
+  name: periodic-table-plotter
+  version: "0.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 6fb1f61b9af62503e545b2d6826a8bf709d48f9d371d074ae8d92b515f19d19d
+  patches:
+    - python3.patch
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - pyyaml <=5.4
+    - numpy
+    - matplotlib-base
+
+tests:
+  - python:
+      imports:
+        - ptplotter
+      pip_check: false
+      python_version: ${{ python_min }}
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: Make periodic table map plots and pettifor-style trend plots.
+  description: |
+    Make a periodic table that plots 1-4 values per tile, easily configure
+    grids of pair-wise elemental data (with 1-4 values per tile) and create pettifor-style trend plots.
+  homepage: https://github.com/wolverton-research-group/periodic-table-plotter
+  repository: https://github.com/wolverton-research-group/periodic-table-plotter
+  documentation: https://github.com/wolverton-research-group/periodic-table-plotter
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
